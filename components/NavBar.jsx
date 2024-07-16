@@ -6,17 +6,18 @@ import { useState, useEffect } from "react"
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 const NavBar = () => {
-  const isUserLoggedIn = true
+  const { data: session } = useSession()
+
   const [providers, setProviders] = useState(null)
   const [toggleDropDown, setToggleDropDown] = useState(false)
 
   //Set providers
   useEffect(() => {
-    const setProviders = async() => {
+    const setUpProviders = async() => {
       const response = await getProviders()
       setProviders(response)
     }
-    setProviders()
+    setUpProviders()
   }, [])
 
   return (
@@ -35,7 +36,7 @@ const NavBar = () => {
       {/* Desktop Navigation  */}
 
       <div className="sm:flex hidden">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5 ">
             <Link href="/create-prompt" className="black_btn">
               Create Post
@@ -50,7 +51,7 @@ const NavBar = () => {
 
             <Link href="/profile">
               <Image
-                src="/assets/images/liked.png"
+                src={session?.user.image}
                 width={37}
                 height={37}
                 className="rounded-full"
@@ -66,9 +67,9 @@ const NavBar = () => {
                   type="button"
                   key={provider.name}
                   onClick={() => signIn(provider.id)}
-                  className='black_btn'
+                  className='black_btn mr-2'
                 >
-                  Sign In
+                  Sign In {provider.name}
                 </button>
               ))
             }
@@ -78,10 +79,10 @@ const NavBar = () => {
 
       {/* Mobile Navigation  */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
-                src="/assets/images/liked.png"
+                src={session?.user.image}
                 width={37}
                 height={37}
                 className="rounded-full"
@@ -139,9 +140,9 @@ const NavBar = () => {
                   type="button"
                   key={provider.name}
                   onClick={() => signIn(provider.id)}
-                  className='black_btn'
+                  className='black_btn mr-2'
                 >
-                  Sign In
+                  Sign In {provider.name}
                 </button>
               ))
             }
