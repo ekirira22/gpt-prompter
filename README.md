@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-    <a href="https://gpt-prompter.vercel.app" target="_blank">
+    <a href="https://main.d3rdpe8dehwtd0.amplifyapp.com/" target="_blank">
       <img src="https://github.com/ekirira22/gpt-prompter/blob/main/public/assets/images/GPTX.png?raw=true" alt="Project Logo" width="200">
     </a>
   <br />
